@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/main.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>main.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../guessingGame/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="comment">// 将 io（输入/输出）库引入当前作用域；</span>
+<span class="comment">// io 库来自于标准库（也被称为 std）；</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+
+<span class="comment">// Rng 是一个 trait，它定义了随机数生成器应实现的方法；</span>
+<span class="comment">// 想使用这些方法的话，此 trait 必须在作用域中；</span>
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
+
+<span class="comment">// 运行 cargo doc --open 命令来构建所有本地依赖提供的文档，并在浏览器中打开；</span>
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Guess the number!&quot;</span>);
+
+    <span class="comment">// 提供实际使用的随机数生成器；</span>
+    <span class="comment">// 位于当前执行线程的本地环境中，并从操作系统获取 seed；</span>
+    <span class="comment">// 取两个数字作为参数，并生成一个范围在两者之间的随机数；</span>
+    <span class="comment">// 它包含下限但不包含上限，所以需要指定 1 和 101 来请求一个 1 和 100 之间的数；</span>
+    <span class="kw">let</span> <span class="ident">secretNumber</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">1</span>, <span class="number">101</span>);
+
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The secret number is: {}&quot;</span>, <span class="ident">secretNumber</span>);
+
+    <span class="comment">// loop 关键字创建了一个无限循环；</span>
+    <span class="kw">loop</span> {
+    
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Please input your guess.&quot;</span>);
+
+        <span class="comment">// 创建一个储存用户输入的地方；</span>
+        <span class="comment">// new 是 String 类型的一个 关联函数（associated function）；</span>
+        <span class="comment">// 静态方法（static method）；</span>
+        <span class="comment">// new 函数创建了一个新的空字符串，你会发现很多类型上有 new 函数，因为它是创建类型实例的惯用函数名；</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guess</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();  <span class="comment">// 可变；</span>
+        <span class="comment">// let foo = 5;                 // 不可变；</span>
+
+        <span class="comment">// std::io::stdin；</span>
+        <span class="comment">// read_line 的工作是，无论用户在标准输入中键入什么内容，都将其存入一个字符串中，因此它需要字符串作为参数；</span>
+        <span class="comment">// 这个字符串参数应该是可变的，以便 read_line 将用户输入附加上去；</span>
+        <span class="comment">// &amp; 表示这个参数是一个 引用（reference），它允许多处代码访问同一处数据，而无需在内存中多次拷贝；</span>
+        <span class="ident">io</span>::<span class="ident">stdin</span>().<span class="ident">read_line</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guess</span>)
+            <span class="comment">// 逻辑行；</span>
+            <span class="comment">// 通过换行加缩进来把长行拆开是明智的；</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;Faild to read line&quot;</span>);
+        
+        <span class="comment">// Rust 标准库中有很多叫做 Result 的类型：一个通用的 Result 以及在子模块中的特化版本，比如 io::Result；</span>
+        <span class="comment">// Result 类型是 枚举（enumerations），通常也写作 enums；</span>
+        <span class="comment">// 枚举类型持有固定集合的值，这些值被称为枚举的 成员（variants）；</span>
+        <span class="comment">// Result 的成员是 Ok 和 Err；</span>
+        <span class="comment">// 这些 Result 类型的作用是编码错误处理信息；</span>
+        <span class="comment">// io::Result 的实例拥有 expect 方法；</span>
+        <span class="comment">// 如果 io::Result 实例的值是 Err，expect 会导致程序崩溃，并显示当做参数传递给 expect 的信息;</span>
+        <span class="comment">// 如果 read_line 方法返回 Err，则可能是来源于底层操作系统错误的结果；</span>
+        <span class="comment">// 如果不调用 expect，程序也能编译，不过会出现一个警告；</span>
+        <span class="comment">// Rust 警告我们没有使用 read_line 的返回值 Result，说明有一个可能的错误没有处理；</span>
+        <span class="comment">// 消除警告的正确做法是实际编写错误处理代码，不过由于我们就是希望程序在出现问题时立即崩溃，所以直接使用 expect；</span>
+        
+        <span class="comment">// Rust 允许用一个新值来 隐藏 （shadow） guess 之前的值；</span>
+        <span class="comment">// 许我们复用 guess 变量的名字，而不是被迫创建两个不同变量；</span>
+        <span class="comment">// String 实例的 trim 方法会去除字符串开头和结尾的空白字符；</span>
+        <span class="comment">// trim 方法消除 \n；</span>
+        <span class="comment">// 字符串的 parse 方法 将字符串解析成数字；</span>
+        <span class="comment">// oarse 方法可以解析多种数字类型，因此需要告诉 Rust 具体的数字类型，这里通过 let guess: u32 指定；</span>
+        <span class="comment">// 后面的冒号（:）告诉 Rust 我们指定了变量的类型；</span>
+        <span class="kw">let</span> <span class="ident">guess</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">guess</span>.<span class="ident">trim</span>().<span class="ident">parse</span>() {
+            <span class="prelude-val">Ok</span>(<span class="ident">num</span>) <span class="op">=&gt;</span> <span class="ident">num</span>,
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">continue</span>,
+        };
+
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;You guessed: {}&quot;</span>, <span class="ident">guess</span>);
+
+        <span class="comment">// Rust 标准库中尚未包含随机数功能；</span>
+        <span class="comment">// crate 是一个 Rust 代码包。我们正在构建的项目是一个 二进制 crate，它生成一个可执行文件；</span>
+        <span class="comment">// rand crate 是一个 库 crate，库 crate 可以包含任意能被其他程序使用的代码；</span>
+        <span class="comment">// 使用 rand 编写代码之前，需要修改 Cargo.toml 文件，引入一个 rand 依赖；</span>
+
+        <span class="comment">// cmp 方法用来比较两个值并可以在任何可比较的值上调用；</span>
+        <span class="comment">// 它获取一个被比较值的引用：这里是把 guess 与 secret_number 做比较；</span>
+        <span class="comment">// 返回一个刚才通过 use 引入作用域的 Ordering 枚举的成员；</span>
+        <span class="comment">// 使用一个 match 表达式，根据对 guess 和 secret_number 调用 cmp 返回的 Ordering 成员来决定接下来做什么；</span>
+
+        <span class="comment">// match 表达式由 分支（arms） 构成；</span>
+        <span class="comment">// 一个分支包含一个 模式（pattern）和表达式开头的值与分支模式相匹配时应该执行的代码；</span>
+        <span class="comment">// Rust 获取提供给 match 的值并挨个检查每个分支的模式；</span>
+        <span class="kw">match</span> <span class="ident">guess</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">secretNumber</span>) {
+            <span class="comment">// Ordering 也是一个枚举，不过它的成员是 Less、Greater 和 Equal；</span>
+            <span class="ident">Ordering</span>::<span class="ident">Less</span>      <span class="op">=&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Too small!&quot;</span>),
+            <span class="ident">Ordering</span>::<span class="ident">Greater</span>   <span class="op">=&gt;</span> <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Too big!&quot;</span>),
+            <span class="ident">Ordering</span>::<span class="ident">Equal</span>     <span class="op">=&gt;</span> {
+                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;You win!&quot;</span>);
+                <span class="kw">break</span>;
+            }
+        }
+    }
+
+    <span class="comment">// Rust 有一个静态强类型系统，同时也有类型推断；</span>
+    <span class="comment">// 例如：当我们写出 let guess = String::new() 时，Rust 推断出 guess 应该是 String 类型，并不需要我们写出类型；</span>
+
+}</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "guessingGame";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
