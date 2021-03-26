@@ -1,21 +1,29 @@
 fn main() {
-    // String 类型被分配到堆上，所以能够存储在编译时未知大小的文本；
-    // 可以使用 from 函数基于字符串字面值来创建 String；
-    let s = String::from("hello");
-
-    let mut s = String::from("hello");
-    s.push_str(", world!");
-    println!("{}", s);
-
     let s1 = String::from("hello");
-    let s2 = s1.clone();
-    println!("s1 = {}, s2 = {}", s1, s2);
 
-    let (s2, len) = calculate_length(s1);
-    println!("The length of '{}' is {}.", s2, len);
+    // & 符号就是 引用，它们允许你使用值但不获取其所有权；
+    let len = calculate_length(&s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+
+    let mut s = String::from("Hello");
+    
+    change(&mut s);
+
+    let len = calculate_length(&s);
+
+    println!("The length of '{}' is {}.", s, len);
 }
 
-fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len();
-    (s, length)
+// 在特定作用域中的特定数据只能有一个可变引用；
+fn change(someString: &mut String) {
+    someString.push_str(", world!");
+}
+
+// 使用 & 引用相反的操作是 解引用（dereferencing），它使用解引用运算符，*；
+// &String s 指向 String s1；
+// 获取引用作为函数参数称为 借用（borrowing）；
+// （默认）不允许修改引用的值；
+fn calculate_length(s: &String) -> usize {
+    s.len()
 }
