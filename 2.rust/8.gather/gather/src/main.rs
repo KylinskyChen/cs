@@ -49,8 +49,6 @@ fn main() {
 
     let mut s  = String::from("lo");
 
-    s.push("l");
-
     let s1 = String::from("Hello, ");
     let s2 = String::from("world!");
     let s3 = s1 + &s2;
@@ -63,7 +61,15 @@ fn main() {
 
     let len = String::from("Hola").len();
     let s1 = String::from("hello");
-    let h = s1[0];
 
     println!("Hello, world!");
+
+    use std::collections::HashMap;
+
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    
 }
