@@ -1,0 +1,1 @@
+/Users/jerome/cs/2.rust/7.lib/restaurant/target/debug/librestaurant.rlib: /Users/jerome/cs/2.rust/7.lib/restaurant/src/front_of_house/hosting.rs /Users/jerome/cs/2.rust/7.lib/restaurant/src/front_of_house.rs /Users/jerome/cs/2.rust/7.lib/restaurant/src/lib.rs
